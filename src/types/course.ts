@@ -1,25 +1,18 @@
-export type Course = {
-  id: string
-  title: string
-  description: string
-<<<<<<< HEAD
-  instructor_id: string
-  created_at: string
-  updated_at: string
-  price: number
-  image_url?: string
-  lessons: {
-    id: string
-    title: string
-    description: string
-    order: number
-  }[]
-=======
-  price: number
-  thumbnail: string
-  instructor_id: string
-  created_at: string
-  updated_at: string
+export interface Course {
+  id: string;
+  title: string;
+  description: string;
+  instructor_id: string;
+  price: number;
+  created_at: string;
+  updated_at: string;
+  thumbnail_url?: string;
+  video_url?: string;
+  category?: string;
+  level?: 'beginner' | 'intermediate' | 'advanced';
+  duration?: number;
+  rating?: number;
+  enrolled_students?: number;
 }
 
 export type CourseWithInstructor = Course & {
@@ -45,5 +38,4 @@ export type CourseEnrollment = {
   course_id: string
   user_id: string
   created_at: string
->>>>>>> 98c9c67ead9145d502e89e9ef460bf7512025a66
 } 
