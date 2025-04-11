@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['nsohhtlgbafrydzjkqle.supabase.co'],
-<<<<<<< HEAD
-=======
+    domains: ['nsohhtlgbafrydzjkqle.supabase.co']
   },
   webpack: (config, { isServer }) => {
     // Fixes npm packages that depend on `fs` module
@@ -17,7 +15,6 @@ const nextConfig = {
   },
   experimental: {
     esmExternals: 'loose'
->>>>>>> 98c9c67ead9145d502e89e9ef460bf7512025a66
   }
 }
 
