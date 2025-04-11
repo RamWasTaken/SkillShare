@@ -9,8 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.49.4",
+=======
+    "@supabase/auth-helpers-nextjs": "^0.8.7",
+    "@supabase/ssr": "^0.1.0",
+    "@supabase/supabase-js": "^2.39.3",
+>>>>>>> 98c9c67ead9145d502e89e9ef460bf7512025a66
     "next": "14.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -25,5 +31,16 @@
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
+<<<<<<< HEAD
+=======
+  },
+  "resolutions": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "overrides": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+>>>>>>> 98c9c67ead9145d502e89e9ef460bf7512025a66
   }
 }
