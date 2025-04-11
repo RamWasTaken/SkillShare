@@ -1,0 +1,29 @@
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import { SupabaseProvider } from '@/providers/supabase-provider'
+import { Navbar } from '@/components/navbar'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata: Metadata = {
+  title: 'SkillShare - Learn and Teach',
+  description: 'A platform for learning and teaching skills',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <SupabaseProvider>
+          <Navbar />
+          {children}
+        </SupabaseProvider>
+      </body>
+    </html>
+  )
+} 
