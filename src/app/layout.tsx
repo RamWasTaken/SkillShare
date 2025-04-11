@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { SupabaseProvider } from '@/providers/supabase-provider'
-import { Navbar } from '@/components/navbar'
+import SupabaseProvider from '@/providers/supabase-provider'
+import Navbar from '@/components/navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'SkillShare - Learn and Teach',
-  description: 'A platform for learning and teaching skills',
+  title: 'SkillShare',
+  description: 'Learn and share skills with others',
 }
 
 export default function RootLayout({

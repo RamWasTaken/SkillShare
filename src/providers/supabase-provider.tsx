@@ -1,81 +1,48 @@
 'use client'
 
-import * as React from 'react'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createBrowserClient } from '@supabase/ssr'
 import { useRouter } from 'next/navigation'
-import { supabase } from '../lib/supabase'
+import { createContext, useContext, useEffect, useState } from 'react'
 
-type User = {
-  id: string
-  email: string
-  role: 'student' | 'instructor'
-}
+const Context = createContext<any>(undefined)
 
-type SupabaseContextType = {
-  user: User | null
-  loading: boolean
-  signInWithOAuth: (provider: 'google' | 'github') => Promise<void>
-  signOut: () => Promise<void>
-}
+export default function SupabaseProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const [supabase] = useState(() =>
+    createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+  )
 
-const SupabaseContext = createContext<SupabaseContextType | undefined>(undefined)
-
-export function SupabaseProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (session) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', session.user.id)
-          .single()
-
-        setUser(profile)
-      } else {
-        setUser(null)
-      }
-      setLoading(false)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(() => {
+      router.refresh()
     })
 
-    return () => subscription.unsubscribe()
-  }, [])
-
-  const signInWithOAuth = async (provider: 'google' | 'github') => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    })
-
-    if (error) {
-      console.error('Error signing in:', error.message)
+    return () => {
+      subscription.unsubscribe()
     }
-  }
-
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (error) {
-      console.error('Error signing out:', error.message)
-    }
-    router.push('/')
-  }
+  }, [router, supabase])
 
   return (
-    <SupabaseContext.Provider value={{ user, loading, signInWithOAuth, signOut }}>
+    <Context.Provider value={{ supabase }}>
       {children}
-    </SupabaseContext.Provider>
+    </Context.Provider>
   )
 }
 
-export function useSupabase() {
-  const context = useContext(SupabaseContext)
+export const useSupabase = () => {
+  const context = useContext(Context)
   if (context === undefined) {
-    throw new Error('useSupabase must be used within a SupabaseProvider')
+    throw new Error('useSupabase must be used inside SupabaseProvider')
   }
   return context
 } 

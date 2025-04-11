@@ -1,11 +1,18 @@
 'use client'
 
-import * as React from 'react'
-import { CourseCard } from '@/components/course-card'
-import { CourseWithInstructor } from '@/types/course'
+import React from 'react'
+import CourseCard from '@/components/course-card'
+
+interface Course {
+  id: string
+  title: string
+  description: string
+  imageUrl: string
+  instructor: string
+}
 
 export default function CoursesPage() {
-  const [courses, setCourses] = React.useState<CourseWithInstructor[]>([])
+  const [courses, setCourses] = React.useState<Course[]>([])
   const [loading, setLoading] = React.useState(true)
 
   React.useEffect(() => {
@@ -51,7 +58,14 @@ export default function CoursesPage() {
         <h1 className="text-3xl font-bold text-gray-900 mb-8">All Courses</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+            <CourseCard
+              key={course.id}
+              id={course.id}
+              title={course.title}
+              description={course.description}
+              imageUrl={course.imageUrl}
+              instructor={course.instructor}
+            />
           ))}
         </div>
       </div>
